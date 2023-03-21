@@ -37,7 +37,7 @@ Design a job to download files daily from SGX website.
 
 ## Discription and Usage
 ### get_file
-#### - Discription : This is a Python script that downloads files from SGX website
+#### Description : This is a Python script that downloads files from SGX website
 
    - The script uses the Selenium library to automate Chrome browser and navigate to SGX website where files can be downloaded.
    - Users are required to input the numbers (corresponding to the name of files) and the date of files they wish to download. (1 corresponds to 'WEBPXTICK_DT.zip', 2 corresponds to 'TickData_structure.dat', 3 corresponds to 'TC.txt', 4 corresponds to 'TC_structure.dat')
@@ -47,21 +47,41 @@ Design a job to download files daily from SGX website.
    - The script logs the progress of the download by writing to a CSV file named **download_file.csv**. (At first, the 'status' is 'Not Completed')
    - Then, the download process starts by accessing the download link.
    - Once the download process has completed (or it may not happen), verify the existence of the file by its name. If the file is found, the 'status' field in the **download_file.csv** will be updated to 'Completed' to indicate that the download was successful. If the file is not found, the 'status' field remain unchanged.
-#### - Usage
+#### Usage
 
-   - After the program is launched, users will be prompted to input interger numbers. (1 corresponds to 'WEBPXTICK_DT.zip', 2 corresponds to 'TickData_structure.dat', 3 corresponds to 'TC.txt', 4 corresponds to 'TC_structure.dat'). Multiple numbers can be entered at once, separated by commas (e.g. 1,2,3,4). Any extra space may lead to error.
+   - After the program is launched, users will be prompted to input interger numbers. (1 corresponds to 'WEBPXTICK_DT.zip', 2 corresponds to 'TickData_structure.dat', 3 corresponds to 'TC.txt', 4 corresponds to 'TC_structure.dat'). Multiple numbers can be entered at once, separated by commas (e.g. 1,2,3,4). 
    - Users also will be prompted to input date (require in format "DD MON YYYY", e.g. "13 Mar 2023"). Only one date input can be provided at a time. If users input date is weekend or not valid (e.g. 30 Feb 2023), the program will exit in 10s. 
-   - After that, the download process will start until the browser quits.
+   - After that, the download process starts. When it is completed, the browser quits.
    
    
    
 ### NC_download_file
-#### - Discription : This is a Python script that downloads files which are 'Not Completed' (Redownload)
+#### Description : This is a Python script that downloads files which are 'Not Completed' (Redownload)
 
-   - The script reads a CSV file named 'download_file.csv' that contains information about the files had been downloaded from **get_file.py**
-   - 
+   - The script reads a CSV file named **download_file.csv** that contains information about the files had been downloaded from **get_file.py**.
+   - It prints out the rows that have a status of 'Not Completed', which indicates that the file has not been downloaded yet.
+   - Users are prompted to enter the ID of the files (only 'Not Complete' files) they want to download.
+   - The script then extracts the type of data and the date from the selected row, creates a directory with the name of the date if it doesn't already exist, and sets up the browser to download the file to that directory.
+   - If the download is successful, the status of the row in the CSV file is updated to 'Completed'. If there is an error during the download, the status of the row is updated to 'Not Completed' and an error message is logged.
+
+#### Usage
+
+   - After the program is launched, it returns rows that have a status of 'Not Completed' from **download_file.csv**.
+   - Users are prompted to enter the ID of the files (only 'Not Complete' files) they want to download. Multiple IDs can be entered at once, separated by commas (e.g. 8,13,25).
+   - After that, the redownload process starts. When it is completed, the browser quits.
 
 ### download_file_csv
+#### Description: A CSV file stores the download information for files from both **get_file.py** and **NC_download_file.py**
+
+   - This CSV has 5 columns: id, type_of_data ,date, time_init, last_update, status.
+   - The 'id' column is automatically incremented whenever a new row is created.
+   - The 'type_of_data' column contains 4 types: WEBPXTICK_DT.zip, TickData_structure.dat, TC.txt, TC_structure.dat.
+   - The 'date' column indicates the date of the downloaded files.
+   - The 'time_init' column indicates the time when the row was initially created.
+   - The 'last_update' column indicates the lattest time when the row was updated.
+   - The 'status' has only 2 possible values: 'Completed' and 'Not Completed'
+
+#### Usage: If users want to view this file, they should make a copy.
 
 ## Answer questions in Requirement
 3. Logging must be implemented.
