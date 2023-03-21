@@ -40,12 +40,12 @@ Design a job to download files daily from SGX website.
    - The script logs the progress of the download by writing to a CSV file named **download_file.csv**. (At first, the 'status' is 'Not Completed')
    - Then, the download process starts by accessing the download link.
    - Once the download process has completed (or it may not happen), verify the existence of the file by its name. If the file is found, the 'status' field in the **download_file.csv** will be updated to 'Completed' to indicate that the download was successful. If the file is not found, the 'status' field remain unchanged.
+   - The downloaded files are stored in a 'Downloads' folder, organized by the date of the files.
 #### Usage
 
    - After the program is launched, users will be prompted to input interger numbers. (1 corresponds to 'WEBPXTICK_DT.zip', 2 corresponds to 'TickData_structure.dat', 3 corresponds to 'TC.txt', 4 corresponds to 'TC_structure.dat'). Multiple numbers can be entered at once, separated by commas (e.g. 1,2,3,4). 
    - Users also will be prompted to input date (require in format "DD MON YYYY", e.g. "13 Mar 2023"). Only one date input can be provided at a time. If users input date is weekend or not valid (e.g. 30 Feb 2023), the program will exit in 10s. 
    - After that, the download process starts. When it is completed, the browser quits.
-   - The downloaded files are stored in a 'Downloads' folder, organized by the date of the files.
    
    
    
@@ -57,13 +57,13 @@ Design a job to download files daily from SGX website.
    - Users are prompted to enter the ID of the files (only 'Not Complete' files) they want to download.
    - The script then extracts the type of data and the date from the selected row, creates a directory with the name of the date if it doesn't already exist, and sets up the browser to download the file to that directory.
    - If the download is successful, the status of the row in the CSV file is updated to 'Completed'. If there is an error during the download, the status of the row is updated to 'Not Completed' and an error message is logged.
+   - The downloaded files are stored in a 'Downloads' folder, organized by the date of the files.
 
 #### Usage
 
    - After the program is launched, it returns rows that have a status of 'Not Completed' from **download_file.csv**.
    - Users are prompted to enter the ID of the files (only 'Not Complete' files) they want to download. Multiple IDs can be entered at once, separated by commas (e.g. 8,13,25).
    - After that, the redownload process starts. When it is completed, the browser quits.
-   - The downloaded files are stored in a 'Downloads' folder, organized by the date of the files.
 
 ### download_file.csv
 #### Description: A CSV file stores the download information for files from both **get_file.py** and **NC_download_file.py**
