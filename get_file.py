@@ -1,6 +1,6 @@
+import argparse
 import logging
 import os.path
-import time
 import sys
 from datetime import datetime as datetimer
 import datetime as dt
@@ -8,8 +8,19 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 import csv
+
+
+# Create a parser object
+parser = argparse.ArgumentParser(description="A program that takes numbers and date as input (e.g. py get_file.py -n '1,3' -d '20 Mar 2023')")
+
+# Add arguments for numbers and date
+parser.add_argument("-n", "--numbers", help="Input numbers.(1 corresponds to 'WEBPXTICK_DT.zip', 2 corresponds to 'TickData_structure.dat', 3 corresponds to 'TC.txt', 4 corresponds to 'TC_structure.dat'). Multiple numbers can be entered at once, separated by commas (e.g. 1,2,3,4)", type=str)
+parser.add_argument("-d", "--date", help="Input date in dd mmm yyyy format (e.g. '13 Mar 2023')", type=str)
+
+# Parse arguments from command line
+args = parser.parse_args()
 
 # Set up logging
 log_dir = 'logging_file'
@@ -26,6 +37,17 @@ logging.getLogger('').addHandler(console)
 
 # Function 
 def find_file_by_partial_name(partial_name, path):
+    """Find file by name to check the download is completed or not.
+    
+    Args:
+        partial_name (str): The substring to search for in file names.
+        path (str): The file path contains the file.
+    
+    Returns:
+        str or None: The absolute path to the first file found or None if no file
+            with the given partial name is found.
+    """
+    
     for dirpath, dirnames, filenames in os.walk(path):
         for name in filenames:
             if partial_name in name: 
@@ -34,6 +56,12 @@ def find_file_by_partial_name(partial_name, path):
 
 
 def add_log_entry(tod, y):
+    """Append a new row to the 'download_file.csv' file.
+
+    Args:
+        tod (str): type of data
+        y (str): date of file
+    """
     # Open CSV file in read mode and get the last ID value
     with open('download_file.csv', 'r') as csvfile:
         reader = csv.reader(csvfile)
@@ -56,6 +84,11 @@ def add_log_entry(tod, y):
 
 
 def update_log_entry(status):
+    """Update the recent rows from add_log_entry() to change the status.
+
+    Args:
+        status (str): status of file ('Completed' or 'Not Completed')
+    """
     # Open CSV file in read mode and find the last row
     with open('download_file.csv', 'r') as csvfile:
         reader = csv.reader(csvfile)
@@ -73,16 +106,27 @@ def update_log_entry(status):
     logging.info('Update status of row in csv successfully!')
 
 def get_download_link(input_num, input_date):
+    """Get the download link based on name of file (WEBPXTICK_DT.zip, TickData_structure.dat,...) and date (date will be converted to corresponding number).
+       Accurately download files starting from 19 Dec 2020, not guarantee input dates before 19 Dec 2020.
+
+    Args:
+        input_num (int): the input number (1-4) corresponding to the file to download
+        input_date (str): the input date in the format "DD MON YYYY", convert to corresponding numbers
+
+    Returns:
+        str: a download link for the specified file and date
+    """
+    
     start_date = dt.date(2020, 12, 29)
     start_number = 4800
     
+    # Convert 'input_date' to corresponding numbers
     date_num = dt.datetime.strptime(input_date, "%d %b %Y").date()
-    
     delta = date_num - start_date
-    
     num_weekend_days = sum(1 for i in range(delta.days + 1) if (start_date + dt.timedelta(i)).weekday() >= 5)
     num = start_number + delta.days - num_weekend_days
     
+    # Check if date is weekend or not
     if date_num.weekday() >= 5:
         logging.info("Error: date is a weekend.")
         return None
@@ -97,40 +141,57 @@ def get_download_link(input_num, input_date):
         return get_link
 
 
-# Input to choose 'Type of Data'
-x = input("Input numbers: ")
-x = x.replace(',','')
 
-# Input to choose 'Date'
-y = input("Date: ")
 
-# Check if date(y) is weekend or not.
-y_check = dt.datetime.strptime(y, "%d %b %Y").date()
-if y_check.weekday() < 5:
-    pass
-else:
-    logging.info("Error: date {} is a weekend.".format(y))
+
+
+# Input values if arguments are not given
+if args.numbers is None:
+    args.numbers = input("Input numbers: ")
+if args.date is None:
+    args.date = input("Input date in dd mmm yyyy format: ")
+
+# Replace commas with spaces in numbers argument
+args.numbers = args.numbers.replace(",","")
+
+# Check if date is valid or not
+try:
+    y_check = dt.datetime.strptime(args.date, "%d %b %Y").date()
+except ValueError:
+    logging.info("Error: date {} is not valid.".format(args.date))
     logging.info('The program will exit in 10s')
     sleep(10)
     sys.exit()
 
+
+# Check if date is weekend or not
+if y_check.weekday() < 5:
+    pass
+else:
+    logging.info("Error: date {} is a weekend.".format(args.date))
+    logging.info('The program will exit in 10s')
+    sleep(10)
+    sys.exit()
+
+
+
 # Create file base on date
-path_down = r"C:\Users\Administrator\Downloads\{}".format(y)
+path_down = r"{0}\Downloads\{1}".format(os.getcwd(),args.date)
 if not os.path.exists(path_down):
     os.makedirs(path_down)
 
 # Run Chrome
 options = Options()
 options.add_experimental_option("prefs", {"download.default_directory": path_down})
-ser = Service(r"D:/Downloads/chromedriver_win32/chromedriver.exe")
-browser = webdriver.Chrome(service=ser, options=options)
+s=Service(ChromeDriverManager().install())
+browser = webdriver.Chrome(service=s,options=options)
 browser.get("https://www.sgx.com/research-education/derivatives")
 sleep(5)
 
 
 # Download process
-for i in x:
-    y_date = datetimer.strptime(y, '%d %b %Y').strftime('%Y%m%d') #Take the input date to detect file name
+for i in args.numbers:
+    y_date = datetimer.strptime(args.date, '%d %b %Y').strftime('%Y%m%d') #Take the input date to detect file name
     i = int(i)
     tod_dict = {1: 'WEBPXTICK_DT-{}'.format(y_date), 
                 2: 'TickData_structure', 
@@ -139,31 +200,31 @@ for i in x:
     tod = tod_dict.get(i, '')
     
     # Log download info
-    logging.info("Downloading {0} ({1})".format(tod,y))
+    logging.info("Downloading {0} ({1})".format(tod,args.date))
     
     # Add row to download_file.csv
-    add_log_entry(tod,y)
+    add_log_entry(tod,args.date)
 
     try:
         # Download based on link
-        link_download = get_download_link(i,y)
+        link_download = get_download_link(i,args.date)
         browser.get(link_download)
         sleep(10)
 
         # Check if file exist -> Download completed or not
-        filepath = find_file_by_partial_name('{}'.format(tod), r'C:\Users\Administrator\Downloads\{}'.format(y))
+        filepath = find_file_by_partial_name('{}'.format(tod), r"{0}\Downloads\{1}".format(os.getcwd(),args.date))
         if filepath:
-            logging.info("Completed: Download file '{0} ({1})'".format(tod,y))
+            logging.info("Completed: Download file '{0} ({1})'".format(tod,args.date))
             status = 'Completed'
         else:
-            logging.info("Not completed: Download file '{0} ({1})'".format(tod,y))
+            logging.info("Not completed: Download file '{0} ({1})'".format(tod,args.date))
             status = 'Not completed'
         
         # Update the status of recent row 
         update_log_entry(status)
 
     except Exception as e:
-        logging.error("Error downloading {0} ({1}): {2}".format(tod,y,e))
+        logging.error("Error downloading {0} ({1}): {2}".format(tod,args.date,e))
 
 # Quit the browser
 sleep(10)
