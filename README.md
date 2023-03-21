@@ -6,37 +6,30 @@ Design a job to download files daily from SGX website.
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#requirement-of-project">Requirement of project</a></li>
-    <li><a href="#library">Library</a></li>
+    <li><a href="#requirements-to-run">Requirements to run</a></li>
     <li>
       <a href="#discription-and-usage">Discription and Usage</a>
       <ul>
-        <li><a href="#get_file">get_file</a></li>
-        <li><a href="#nc_download_file">NC_download_file</a></li>
-        <li><a href="#download_file_csv">download_file_csv</a></li>
+        <li><a href="#get_filepy">get_file.py</a></li>
+        <li><a href="#nc_download_filepy">NC_download_file.py</a></li>
+        <li><a href="#download_filecsv">download_file.csv</a></li>
       </ul>
     </li>
-    <li><a href="#answer-questions-in-requirement">Answer questions in Requirement</a></li>
+    <li><a href="#answer-questions-in-requirements-of-project">Answer questions in Requirements of project</a></li>
   </ol>
 </details>
 
 
-## Requirement of project
-1. It should be written in python and run like usual Linux commands, i.e. accepting command line options or even config file.
-2. It should be able to download both historical files (files not on today) and today's file based on user's instructions.
-3. Logging must be implemented.
-  - a. Use logging module provided by python, which can provide flexible logging configurations, e.g. some messages are logged to both stdout and file, and some to file only.
-  - b. Make decisions on what messages/levels to log by yourself. The logs should help to debug/resolve issues.
-4. The recovery plan should be considered. For example, you may ask yourself the following questions:
-  - a. If the downloading failed on one day or on some days how do you redownload the missed file(s)?
-  - b. Is the redownloading automatic or does it require manual intervention?
-  - c. The website only lists the recent files. Is it possible to download older files?
-5. Address any of your concerns in your design.
 
-## Library
+## Requirements to run
+   - Python 3 installed on the system.
+   - Selenium and ChromeDriver installed.
+   - The logging, os.path, time, sys, datetime, csv, datetime and selenium modules should be installed.
+
+  
 
 ## Discription and Usage
-### get_file
+### get_file.py
 #### Description : This is a Python script that downloads files from SGX website
 
    - The script uses the Selenium library to automate Chrome browser and navigate to SGX website where files can be downloaded.
@@ -55,7 +48,7 @@ Design a job to download files daily from SGX website.
    
    
    
-### NC_download_file
+### NC_download_file.py
 #### Description : This is a Python script that downloads files which are 'Not Completed' (Redownload)
 
    - The script reads a CSV file named **download_file.csv** that contains information about the files had been downloaded from **get_file.py**.
@@ -70,7 +63,7 @@ Design a job to download files daily from SGX website.
    - Users are prompted to enter the ID of the files (only 'Not Complete' files) they want to download. Multiple IDs can be entered at once, separated by commas (e.g. 8,13,25).
    - After that, the redownload process starts. When it is completed, the browser quits.
 
-### download_file_csv
+### download_file.csv
 #### Description: A CSV file stores the download information for files from both **get_file.py** and **NC_download_file.py**
 
    - This CSV has 5 columns: id, type_of_data ,date, time_init, last_update, status.
@@ -83,7 +76,7 @@ Design a job to download files daily from SGX website.
 
 #### Usage: If users want to view this file, they should make a copy.
 
-## Answer questions in Requirement
+## Answer questions in Requirements of project
 3. Logging must be implemented.
     > A: In both **get_file.py** and **NC_download_file.py**, I have implemented logging functionality to record program information. This is achieved by creating a directory named 'logging_file' if it does not already exist, and storing the log files in this directory. The log file name is set to "logging_<current_date>.log", where <current_date> is the current date when the program is executed, in the format 'YYYY-MM-DD'. For instance, if the script is executed on **17th March 2023**, the log file will be saved as _logging_file/logging_2023-03-17.log_. The logging setup includes a specified logging format that consists of the date and time of the log message, the severity level of the message, and the actual message content. The logging levels are set to DEBUG for the log file and INFO for the console.
 4. The recovery plan should be considered. For example, you may ask yourself the following questions:
