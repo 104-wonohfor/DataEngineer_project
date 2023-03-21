@@ -11,8 +11,9 @@ DE_mini_project
     <li>
       <a href="#discription-and-usage">Discription and Usage</a>
       <ul>
-        <li><a href="#download_file">download_file</a></li>
+        <li><a href="#get_file">get_file</a></li>
         <li><a href="#nc_download_file">NC_download_file</a></li>
+        <li><a href="#download_file_csv">download_file_csv</a></li>
       </ul>
     </li>
     <li><a href="#answer-questions-in-requirement">Answer questions in Requirement</a></li>
@@ -36,7 +37,13 @@ DE_mini_project
 
 ## Discription and Usage
 
-### download_file
+### get_file
 ### NC_download_file
+### download_file_csv
 
 ## Answer questions in Requirement
+4. The recovery plan should be considered. For example, you may ask yourself the following questions:
+ - a. If the downloading failed on one day or on some days how do you redownload the missed file(s)?
+    > A: The infromation of missed files were saved in download_file.csv which have 'status' are 'Not Completed'. It can be redownload by using NC_download_file.py.
+ - b. Is the redownloading automatic or does it require manual intervention?
+    > A: The redownloading is automatic by using NC_download_file.py. When running it, it will provide a table contains all row which have 'status' is 'Not Completed'. Then, input ID of rows which need to be redownload. 
