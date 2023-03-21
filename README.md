@@ -11,7 +11,7 @@ Design a job to download files daily from SGX website.
       <a href="#discription-and-usage">Discription and Usage</a>
       <ul>
         <li><a href="#get_filepy">get_file.py</a></li>
-        <li><a href="#nc_download_filepy">NC_download_file.py</a></li>
+        <li><a href="#nc_file_downloadpy">NC_file_download.py</a></li>
         <li><a href="#download_filecsv">download_file.csv</a></li>
       </ul>
     </li>
@@ -49,7 +49,7 @@ Design a job to download files daily from SGX website.
    
    
    
-### NC_download_file.py
+### NC_file_download.py
 #### Description : This is a Python script that downloads files which are 'Not Completed' (Redownload)
 
    - The script reads a CSV file named **download_file.csv** that contains information about the files had been downloaded from **get_file.py**.
