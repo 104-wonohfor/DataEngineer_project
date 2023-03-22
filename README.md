@@ -22,9 +22,9 @@ Design a job to download files daily from SGX website.
 
 
 ## Requirements to run
-   - Python 3 installed on the system.
-   - Selenium and ChromeDriver installed.
-   - The logging, os.path, time, sys, datetime, csv, datetime, webdriver_manager,pandas,selenium modules should be installed.
+   - Python installed on the system.
+   - Chrome Browser installed on the system.
+   - Required python modules installed: ```logging```, ```os.path```, ```time```, ```sys```, ```datetime```, ```csv```,```platform```, ```webdriver_manager```,```pandas```,```selenium``` 
 
   
 
@@ -43,8 +43,10 @@ Design a job to download files daily from SGX website.
    - The downloaded files are stored in a 'Downloads' folder, organized by the date of the files.
 #### Usage
 
+   - Execute the program based on your operating system: ```py get_file.py``` (if you are using Window terminal) or ```python3 get_file.py``` (if you are using Linux terminal).
    - After the program is launched, users will be prompted to input interger numbers. (1 corresponds to 'WEBPXTICK_DT.zip', 2 corresponds to 'TickData_structure.dat', 3 corresponds to 'TC.txt', 4 corresponds to 'TC_structure.dat'). Multiple numbers can be entered at once, separated by commas (e.g. 1,2,3,4). 
    - Users also will be prompted to input date (require in format "DD MON YYYY", e.g. "13 Mar 2023"). Only one date input can be provided at a time. If users input date is weekend or not valid (e.g. 30 Feb 2023), the program will exit in 10s. 
+   - Or execute the program: ```py get_file.py -n '1,4' -d '16 Mar 2023'```(if you are using Window terminal) or ```python3 get_file.py -n '1,4' -d '16 Mar 2023'``` if you are using Linux terminal). The above commands will immediately initiate the download process without requiring any input.
    - After that, the download process starts. When it is completed, the browser quits.
    
    
