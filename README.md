@@ -24,7 +24,7 @@ Design a job to download files daily from SGX website.
 ## Requirements to run
    - Python 3 installed on the system.
    - Selenium and ChromeDriver installed.
-   - The logging, os.path, time, sys, datetime, csv, datetime, webdriver_manager and selenium modules should be installed.
+   - The logging, os.path, time, sys, datetime, csv, datetime, webdriver_manager,pandas,selenium modules should be installed.
 
   
 
