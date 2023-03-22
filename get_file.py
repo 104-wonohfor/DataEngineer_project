@@ -179,6 +179,16 @@ else:
 # Create file base on date
 path_down= r"{0}\Downloads\{1}".format(os.getcwd(),args.date)
 
+try:
+    system_name = platform.system()
+except:
+    pass
+
+if system_name == 'Linux':
+    path_down = path_down.replace("\\", "/")
+
+
+
 if not os.path.exists(path_down):
     os.makedirs(path_down)
 
@@ -214,7 +224,7 @@ for i in args.numbers:
         sleep(10)
 
         # Check if file exist -> Download completed or not
-        filepath = find_file_by_partial_name('{}'.format(tod), r"{0}\Downloads\{1}".format(os.getcwd(),args.date))
+        filepath = find_file_by_partial_name('{}'.format(tod), path_down)
         if filepath:
             logging.info("Completed: Download file '{0} ({1})'".format(tod,args.date))
             status = 'Completed'
