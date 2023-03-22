@@ -183,8 +183,6 @@ except:
 if system_name == 'Linux':
     path_down = path_down.replace("\\", "/")
 
-
-
 if not os.path.exists(path_down):
     os.makedirs(path_down)
 
