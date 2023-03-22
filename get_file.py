@@ -58,7 +58,6 @@ def find_file_by_partial_name(partial_name, path):
 
 def add_log_entry(tod, y):
     """Append a new row to the 'download_file.csv' file.
-
     Args:
         tod (str): type of data
         y (str): date of file
@@ -86,7 +85,6 @@ def add_log_entry(tod, y):
 
 def update_log_entry(status):
     """Update the recent rows from add_log_entry() to change the status.
-
     Args:
         status (str): status of file ('Completed' or 'Not Completed')
     """
@@ -109,11 +107,9 @@ def update_log_entry(status):
 def get_download_link(input_num, input_date):
     """Get the download link based on name of file (WEBPXTICK_DT.zip, TickData_structure.dat,...) and date (date will be converted to corresponding number).
        Accurately download files starting from 19 Dec 2020, not guarantee input dates before 19 Dec 2020.
-
     Args:
         input_num (int): the input number (1-4) corresponding to the file to download
         input_date (str): the input date in the format "DD MON YYYY", convert to corresponding numbers
-
     Returns:
         str: a download link for the specified file and date
     """
@@ -230,7 +226,7 @@ for i in args.numbers:
             status = 'Completed'
         else:
             logging.info("Not completed: Download file '{0} ({1})'".format(tod,args.date))
-            status = 'Not completed'
+            status = 'Not Completed'
         
         # Update the status of recent row 
         update_log_entry(status)
