@@ -53,7 +53,7 @@ Design a job to download files daily from SGX website.
    
 ### NC_file_download.py
 #### Description : This is a Python script that downloads files which are 'Not Completed' (Redownload)
-
+  
    - The script reads a CSV file named **download_file.csv** that contains information about the files had been downloaded from **get_file.py**.
    - It prints out the rows that have a status of 'Not Completed', which indicates that the file has not been downloaded yet.
    - Users are prompted to enter the ID of the files (only 'Not Complete' files) they want to download.
@@ -62,9 +62,10 @@ Design a job to download files daily from SGX website.
    - The downloaded files are stored in a 'Downloads' folder, organized by the date of the files.
 
 #### Usage
-
+   - Execute the program based on your operating system: ```py NC_file_download.py``` (if you are using Window terminal) or ```python3 NC_file_download.py``` (if you are using Linux terminal).
    - After the program is launched, it returns rows that have a status of 'Not Completed' from **download_file.csv**.
    - Users are prompted to enter the ID of the files (only 'Not Complete' files) they want to download. Multiple IDs can be entered at once, separated by commas (e.g. 8,13,25).
+   - Or execute the program: ```py NC_file_download.py -id '2,11'```(if you are using Window terminal) or ```python3 NC_file_download.py -id '2,11'``` if you are using Linux terminal). The above commands will immediately initiate the redownload process without requiring any input.
    - After that, the redownload process starts. When it is completed, the browser quits.
 
 ### download_file.csv
