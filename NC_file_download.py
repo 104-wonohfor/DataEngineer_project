@@ -166,7 +166,7 @@ for id in id_input:
             status = 'Completed'
         else:
             logging.info("Not completed: Download file '{0} ({1})'".format(tod,y))
-            status = 'Not completed'
+            status = 'Not Completed'
         
         # Update the status of row 
         row_index = df.index[df['id'] == id].tolist()[0]
