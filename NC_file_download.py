@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import datetime as dt
-
+import platform
 
 # Create a parser object
 parser = argparse.ArgumentParser(description="A program that takes numbers and date as input (e.g. py NC_file_download.py -id '3,9')")
@@ -124,6 +124,14 @@ for id in id_input:
 
 # Create file base on date
     path_down = r"{0}\Downloads\{1}".format(os.getcwd(),y)
+    try:
+        system_name = platform.system()
+    except:
+        pass
+
+    if system_name == 'Linux':
+        path_down = path_down.replace("\\", "/")
+
     if not os.path.exists(path_down):
         os.makedirs(path_down)
 
