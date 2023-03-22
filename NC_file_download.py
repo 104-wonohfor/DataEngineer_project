@@ -102,8 +102,7 @@ print(not_completed_df.to_string(index=False))
 if args.id is None:
     args.id = input("Input ID: ")
 
-
-id_input = args.id.replace(',','')
+id_input = args.id.split(',')
 
 for id in id_input:
     id = int(id)
@@ -182,3 +181,6 @@ for id in id_input:
 sleep(10)
 browser.quit()
 logging.info('Quit the browser')
+
+
+
