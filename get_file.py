@@ -176,7 +176,9 @@ else:
 
 
 # Create file base on date
-path_down = r"{0}\Downloads\{1}".format(os.getcwd(),args.date)
+path_file = r"{0}/Downloads/{1}".format(os.getcwd(),args.date)
+path_down = path_file.replace('/', '\\')
+
 if not os.path.exists(path_down):
     os.makedirs(path_down)
 
