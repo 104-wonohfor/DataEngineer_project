@@ -10,8 +10,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import csv
+import platform
 
-
+    
 # Create a parser object
 parser = argparse.ArgumentParser(description="A program that takes numbers and date as input (e.g. py get_file.py -n '1,3' -d '20 Mar 2023')")
 
@@ -176,8 +177,7 @@ else:
 
 
 # Create file base on date
-path_file = r"{0}/Downloads/{1}".format(os.getcwd(),args.date)
-path_down = path_file.replace('/', '\\')
+path_down= r"{0}\Downloads\{1}".format(os.getcwd(),args.date)
 
 if not os.path.exists(path_down):
     os.makedirs(path_down)
