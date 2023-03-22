@@ -160,7 +160,7 @@ for id in id_input:
         sleep(10)
 
         # Check if file exist -> Download completed or not
-        filepath = find_file_by_partial_name('{}'.format(tod), r"{0}\Downloads\{1}".format(os.getcwd(),y))
+        filepath = find_file_by_partial_name('{}'.format(tod), path_down)
         if filepath:
             logging.info("Completed: Download file '{0} ({1})'".format(tod,y))
             status = 'Completed'
