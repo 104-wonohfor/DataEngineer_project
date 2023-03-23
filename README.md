@@ -1,4 +1,4 @@
-# DataEngineer_Miniproject
+# DataEngineer_project
 Design a job to download files daily from SGX website.
 
 
